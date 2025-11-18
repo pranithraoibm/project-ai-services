@@ -131,6 +131,22 @@ func runServiceReport() error {
 		return fmt.Errorf("failed to run servicereport tool to validate Spyre cards configuration: %v, output: %s", err, string(out))
 	}
 	logger.Infof("ServiceReport output: %v", string(out))
+
+	if err := configureUsergroup(); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func configureUsergroup() error {
+	cmd_str := `groupadd sentient; usermod -aG sentient $USER`
+	cmd := exec.Command("bash", "-c", cmd_str)
+	out, err := cmd.CombinedOutput()
+	if err != nil {
+		return fmt.Errorf("❌ failed to create sentient group and add current user to the sentient group. Error: %w, output: %w", err, string(out))
+	}
+
 	return nil
 }
 
