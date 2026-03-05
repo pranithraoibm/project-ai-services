@@ -14,8 +14,10 @@ RUN npm run build
 FROM registry.access.redhat.com/ubi9/nginx-126:9.7
 
 COPY nginx.conf.tmpl /etc/nginx/nginx.conf.tmpl
+COPY --chmod=755 entrypoint.sh /entrypoint.sh
+
 COPY --from=build /app/dist /usr/share/nginx/html
 
 EXPOSE 3000
 
-CMD /bin/bash -c "envsubst '\$BACKEND_HOST \$BACKEND_PORT' < /etc/nginx/nginx.conf.tmpl > /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
+CMD ["/bin/bash", "/entrypoint.sh"]
