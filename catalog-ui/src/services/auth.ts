@@ -1,4 +1,4 @@
-import type { LoginRequest, LoginResponse } from "../types/auth";
+import type { LoginRequest, LoginResponse } from "@/types/auth";
 
 import { API_BASE_URL } from "@/constants/env.constants";
 import { AUTH_ENDPOINTS } from "@/constants/api-endpoints.constants";

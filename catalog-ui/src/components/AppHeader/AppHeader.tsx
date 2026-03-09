@@ -154,9 +154,11 @@ const AppHeader = (props: AppHeaderProps) => {
             <Theme theme="g10">
               <Modal
                 open={state.isLogoutModalOpen}
-                size="xs"
+                size="sm"
                 primaryButtonText="Log out"
                 secondaryButtonText="Cancel"
+                modalHeading="Are you sure you want to log out of IBM Open-Source AI
+                  Foundation for Power?"
                 onRequestClose={() => {
                   dispatch({ type: "CLOSE_LOGOUT_MODAL" });
                 }}
@@ -177,12 +179,7 @@ const AppHeader = (props: AppHeaderProps) => {
                     navigate("/logout", { replace: true });
                   }
                 }}
-              >
-                <p>
-                  Are you sure you want to log out of IBM Open-Source AI
-                  Foundation for Power?
-                </p>
-              </Modal>
+              ></Modal>
             </Theme>
           </HeaderGlobalBar>
         )}
