@@ -9,9 +9,8 @@
 
 .chat-container {
   display: flex;
-  min-height: 90vh;
+  height: 90vh;
   padding: 1rem;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden;
   width: 100%;
 }
