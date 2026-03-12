@@ -66,6 +66,29 @@ class VectorStore(ABC):
         """
         pass
 
+    @abstractmethod
+    def check_db_populated(self) -> bool:
+        """
+        Check if the vector database is populated with data.
+
+        Returns:
+            bool: True if the database contains indexed documents, False otherwise.
+        """
+        pass
+
+    @abstractmethod
+    def delete_document_by_id(self, doc_id: str) -> int:
+        """
+        Delete all chunks associated with a specific document from the index.
+        
+        Args:
+            doc_id: The unique identifier of the document to delete
+            
+        Returns:
+            Number of chunks deleted
+        """
+        pass
+
 class VectorStoreNotReadyError(Exception):
     """Raised when the database is unreachable or initializing."""
     pass
