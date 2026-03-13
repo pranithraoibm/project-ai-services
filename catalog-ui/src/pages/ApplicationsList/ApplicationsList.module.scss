@@ -83,3 +83,9 @@
     }
   }
 }
+
+.exportStatus {
+  display: flex;
+  align-items: center;
+  gap: spacing.$spacing-02;
+}
