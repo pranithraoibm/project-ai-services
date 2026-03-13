@@ -123,6 +123,7 @@ const initialState: AppState = {
   deleteErrorMessage: "",
   deleteErrorRowName: "",
   isDeleting: false,
+  hasError: false,
   isExportDialogOpen: false,
   csvFileName: "",
   exportStatus: "idle",
@@ -153,7 +154,7 @@ const appReducer = (state: AppState, action: AppAction): AppState => {
         ...state,
         isDeleteDialogOpen: false,
         isConfirmed: false,
-        selectedRowId: null,
+        selectedRowId: state.hasError ? state.selectedRowId : null,
       };
 
     case ACTION_TYPES.SET_CONFIRMED:
@@ -174,6 +175,7 @@ const appReducer = (state: AppState, action: AppAction): AppState => {
         deleteErrorRowName: action.payload.rowName ?? "",
         toastOpen: true,
         isDeleting: false,
+        hasError: true,
       };
 
     case ACTION_TYPES.HIDE_ERROR:
@@ -181,11 +183,15 @@ const appReducer = (state: AppState, action: AppAction): AppState => {
         ...state,
         toastOpen: false,
         selectedRowId: null,
+        hasError: false,
         deleteErrorRowName: "",
       };
 
     case ACTION_TYPES.SET_IS_DELETING:
       return { ...state, isDeleting: action.payload };
+
+    case ACTION_TYPES.SET_SELECTED_ROW_ID:
+      return { ...state, selectedRowId: action.payload };
 
     case ACTION_TYPES.OPEN_EXPORT_DIALOG:
       return {
@@ -367,6 +373,15 @@ const ApplicationsListPage = () => {
           subtitle={state.deleteErrorMessage}
           onCloseButtonClick={() => {
             dispatch({ type: ACTION_TYPES.HIDE_ERROR });
+          }}
+          onActionButtonClick={async () => {
+            const currentRowId = state.selectedRowId;
+            dispatch({ type: ACTION_TYPES.HIDE_ERROR });
+            dispatch({
+              type: ACTION_TYPES.SET_SELECTED_ROW_ID,
+              payload: currentRowId,
+            });
+            await handleDelete();
           }}
           style={{
             position: "fixed",
@@ -577,7 +592,7 @@ const ApplicationsListPage = () => {
             <Modal
               open={state.isDeleteDialogOpen}
               size="sm"
-              modalLabel="Delete Case routing"
+              modalLabel={`Delete ${state.rowsData.find((r) => r.id === state.selectedRowId)?.name || 'Application'}`}
               modalHeading="Confirm delete"
               primaryButtonText="Delete"
               secondaryButtonText="Cancel"

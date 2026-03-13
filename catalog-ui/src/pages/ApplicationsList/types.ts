@@ -27,6 +27,7 @@ export interface AppState {
   csvFileName: string;
   exportStatus: ExportStatus;
   exportErrorMessage: string;
+  hasError: boolean;
 }
 
 export const ACTION_TYPES = {
@@ -46,6 +47,7 @@ export const ACTION_TYPES = {
   SET_EXPORT_STATUS: "SET_EXPORT_STATUS",
   SET_EXPORT_ERROR: "SET_EXPORT_ERROR",
   CLEAR_EXPORT_ERROR: "CLEAR_EXPORT_ERROR",
+  SET_SELECTED_ROW_ID: "SET_SELECTED_ROW_ID",
 } as const;
 
 export type AppAction =
@@ -67,4 +69,6 @@ export type AppAction =
   | { type: typeof ACTION_TYPES.SET_CSV_FILENAME; payload: string }
   | { type: typeof ACTION_TYPES.SET_EXPORT_STATUS; payload: ExportStatus }
   | { type: typeof ACTION_TYPES.SET_EXPORT_ERROR; payload: string }
-  | { type: typeof ACTION_TYPES.CLEAR_EXPORT_ERROR };
+  | { type: typeof ACTION_TYPES.CLEAR_EXPORT_ERROR }
+  | { type: typeof ACTION_TYPES.SET_SELECTED_ROW_ID; payload: string | null }
+  | { type: typeof ACTION_TYPES.SET_IS_DELETING; payload: boolean };
