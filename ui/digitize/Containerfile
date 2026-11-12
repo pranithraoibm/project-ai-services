@@ -11,7 +11,7 @@ RUN npm run build
 
 
 # runtime stage
-FROM registry.access.redhat.com/ubi9/nginx-126:9.8
+FROM registry.access.redhat.com/ubi9/nginx-126:9.9
 
 USER root
 RUN dnf update -y --disablerepo='*' --enablerepo='ubi-9-*' && \
